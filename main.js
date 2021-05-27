@@ -232,43 +232,13 @@ function _Fjpc_Varible(type,value) {
 			var tmp_bin = value.toString(2);
 			//值转成二进制
 			var point_position = tmp_bin.indexOf(".");
-			//定位小数点
-			if (point_position == -1) {
-				//无小数点
-				var power_position = 127;
-				power_position = power_position.toString(2);
-				//设置偏移指数为127（默认）
-				var num = tmp_bin.substring(0,23);
-				//截取23位尾数
-				while (num.length < 24)
-					num += "0";
-				//不足23位填充为23位
-			} else {
-				var first_real_number = tmp_bin.indexOf("1");
-				//得到第一个有效数字位置(第一个1)
-				if (first_real_number == -1) {
-					//没有有效数字
-					var power_position = 127;
-					power_position = power_position.toString(2);
-					//设置偏移指数为127（默认）
-					var num = "";
-					while (num.length < 24)
-						num += "0";
-					//23位尾数设置为0
-				} else {
-					var difference = point_position - first_real_number - 1;
-					//得到偏移量
-					var power_position = 127 + difference;
-					power_position = power_position.toString(2);
-					//偏移指数=127+偏移量
-					var num = tmp_bin.substring(first_real_number-1).substring(0,23);
-					num.replaceAll(".","");
-					//截取23位尾数	
-					while (num.length < 24)
-						num += "0";
-					//不足23位填充为23位
-				};
-			};
+			if (tmp_bin == "0") {
+				//值为0
+				var power_position = "00000000";
+				//指数为0
+				var num = "00000000000000000000000";
+				//尾数为0
+			}
 			var bin = sign_bit + power_position + num;
 			bin = bin.replaceAll(".","");
 		
